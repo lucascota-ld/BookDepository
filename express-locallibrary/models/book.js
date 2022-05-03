@@ -2,18 +2,22 @@ var mongoose = require('mongoose');
 
 var Schema = mongoose.Schema;
 
-var AuthorSchema = new Schema(
+var BookSchema = new Schema(
   {
-    first_name: {type: String, required: true, max: 100},
-    family_name: {type: String, required: true, max: 100},
-    date_of_birth: {type: Date},
-    date_of_death: {type: Date},
+    title: {type: String, required: true},
+    author: {type: Schema.Types.ObjectId, ref: 'Author', required: true},
+    summary: {type: String, required: true},
+    isbn: {type: String, required: true},
+    genre: [{type: Schema.Types.ObjectId, ref: 'Genre'}]
   }
 );
 
-AuthorSchema
-.virtual('name')
-.get(function(){
-    return this.family_name + ',' + this.first_name;
+// Virtual for book's URL
+BookSchema
+.virtual('url')
+.get(function () {
+  return '/catalog/book/' + this._id;
 });
 
+//Export model
+module.exports = mongoose.model('Book', BookSchema);
