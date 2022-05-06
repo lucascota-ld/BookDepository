@@ -7,3 +7,4 @@ client.connect(err => {
   client.close();
   console.log('connected')
 });
+ module.exports = {}
