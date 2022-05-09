@@ -2,6 +2,8 @@ const express = require('express');
 const app = express();
 const routers = require('./routers/apiRouter')
 const { MongoClient } = require('mongodb');
+const bodyParser = require('body-parser');
+const mongoose = require('mongoose')
 
 
 //READ URL
@@ -11,9 +13,9 @@ app.use( express.urlencoded ({
 
 
 app.use(express.json());
+app.use(bodyParser.json())
 
-
-app.use('/api', routers)
+app.use('/books', routers)
 
 
 
@@ -21,14 +23,13 @@ app.use('/api', routers)
 
 
 //CONNECTION MONGODB ATLAS
-MongoClient.connect('mongodb+srv://Lucas:32459440@cluster0.qero8.mongodb.net/books-depository?retryWrites=true&w=majority',
-{useUnifiedTopology: true},
-(error, connection)=>{
-  if(error)return console.log(error);
-  global.connection = connection.db('books-depository');
-  app.listen(3000);
-  console.log('connected');  
-})
+mongoose 
+ .connect('mongodb+srv://Lucas:32459440@cluster0.qero8.mongodb.net/books-depository?retryWrites=true&w=majority',   process.env.MONGO_PROD_URI, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+        useCreateIndex: true,   })   
+ .then(() => console.log("Database connected!"), app.listen(3000))
+ .catch(err => console.log(err));
 
 
 
