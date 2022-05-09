@@ -1,7 +1,8 @@
 const express = require('express');
 const app = express();
-const router = require('./router')
+const routers = require('./routers/apiRouter')
 const { MongoClient } = require('mongodb');
+
 
 //READ URL
 app.use( express.urlencoded ({
@@ -10,12 +11,16 @@ app.use( express.urlencoded ({
 
 
 app.use(express.json());
-app.use('/', router);
+
+
+app.use('/api', routers)
 
 
 
 
 
+
+//CONNECTION MONGODB ATLAS
 MongoClient.connect('mongodb+srv://Lucas:32459440@cluster0.qero8.mongodb.net/books-depository?retryWrites=true&w=majority',
 {useUnifiedTopology: true},
 (error, connection)=>{
@@ -25,6 +30,9 @@ MongoClient.connect('mongodb+srv://Lucas:32459440@cluster0.qero8.mongodb.net/boo
   console.log('connected');  
 })
 
+
+
+ 
 
 
      
