@@ -7,6 +7,6 @@ router.get('/teste', apiController.teste);
 router.get('/details', apiController.details);
 router.post('/create', apiController.create);
 router.put('/update', apiController.update);
-router.delete('/delete', apiController.delete);
+router.delete('/:id', apiController.delete);
 
 module.exports = router;
