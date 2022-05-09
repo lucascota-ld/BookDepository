@@ -1,20 +1,25 @@
 const books = require('../models/book')
 
-exports.teste = function (req, res) {
-    res.send('Olá! Teste ao Controller')
-  };
 
-exports.details = function(req, res){
-    res.send({type: 'GET'})
-  };
+//GET BOOKS
+exports.details = (function(req, res){
+      books.find({}).then(function(books){
+        res.send(books)
+      })
+});
 
-exports.add = function(req, res){
-    res.send({type: 'POST'})
-  };
 
-exports.update = function(req, res){
-    res.send({type: 'PUT'})
-  };
+
+//UPDATE BOOK
+exports.update =(function(req, res, next){
+  books.findByIdAndUpdate({_id: req.params.id}, req.body).then(function(){
+    books.findOne({_id: req.params.id}).then(function(book){
+      res.send(book)
+      console.log('update book')
+    });
+  }).catch(next);
+});
+
 //DELETE A BOOK 
 exports.delete =(function(req, res, next) {
   books.findByIdAndDelete(req.params.id)
