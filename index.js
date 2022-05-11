@@ -24,7 +24,7 @@ app.use('/books', routers)
 
 //CONNECTION MONGODB ATLAS
 mongoose 
- .connect('mongodb+srv://Lucas:32459440@cluster0.qero8.mongodb.net/books-depository?retryWrites=true&w=majority',   process.env.MONGO_PROD_URI, {
+ .connect('mongodb+srv://<yournamecluster:<yourpassword>@cluster0.qero8.mongodb.net/<myfirstdatabase?>?retryWrites=true&w=majority',   process.env.MONGO_PROD_URI, {
         useNewUrlParser: true,
         useUnifiedTopology: true,
         useCreateIndex: true,   })   
